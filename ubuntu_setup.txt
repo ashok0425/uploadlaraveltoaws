@@ -1,0 +1,153 @@
+Instruction to upload laravel project in aws
+
+CREATE INSTANCE
+1) Login to aws
+2) Create instance (with new security or select existing group)
+3) Create Elastic IP
+4) Associate Elastic IP to created instance
+ while creating instace you will get one key file store it securly
+
+###CREATING HOSTEDZONE###
+if you register domain via aws it will automatic create hostedzone for you
+ For third party domain
+1) create hostedzone with the domain name
+2) Create A record with www and value Elastic IP (that we had assign to instance)
+3) update nameserver of domain 
+ 
+
+####INSTALLING APPACHE IN UBUNTU####
+Run all below command to root directory
+ 
+1)sudo apt update
+2)sudo apt install apache2
+3)sudo ufw app list
+         (output)
+Available applications:
+  Apache
+  Apache Full
+  Apache Secure
+  OpenSSH
+
+4)sudo ufw allow 'Apache'
+  sudo ufw enable(enable ufw)
+  sudo ufw allow  openSSH (enable/allow ssh)
+
+5)sudo ufw status
+   (status will show active)
+    if not run "sudo systemctl enable apache2"
+6) Enable openSSH "sudo ufw allow ssh"
+7) Create directory for your repo "mkdir app"
+8) Assign read and write permission to create directory
+    sudo chown -R ubuntu:ubuntu .
+    sudo chmod -R 755 /var/www/app
+9) Now you can create your or update ur project
+
+Configure virtual host
+a) Go to site enable directory
+   cd /etc/apache2/site-enabled/
+b) Remove all the conf file or disable it
+  remove "sudo rm -f 'filename' "
+  disable "sudo a2disite 'filname' "
+c) No go to site-availabe dirctory
+   cd /etc/apache2/site-available
+d) Delete all file in site-available directory
+e) Create new file with name as you want
+   sudo nano demo.conf
+   paste the below code 
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName ashokmehta.xyz
+    ServerAlias www.ashokmehta.xyz
+    DocumentRoot /var/www/app
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+now press ctr+x then y and hit enter to exit editor
+
+f) Enable conf create file
+   sudo a2ensite demo.conf
+   sudo ln -s /etc/apache2/site-availabe/demo.conf /etc/apache2/site-enabled
+
+g) check apache status 
+   sudo apache2ctl configtest
+h) if needed restart apache
+   sudo systemctl restart apache2
+
+----HERE You go you have successfully configure apache in ubuntu
+
+######INSTALLING PHP AND COMPOSER ####
+1) sudo apt-get update
+2) sudo apt -y install software-properties-common (it will add management for additional software resources)
+3)sudo add-apt-repository ppa:ondrej/php (it will allow al version of php)
+4)sudo apt-get update
+5)sudo apt-get install -y php7.4
+6)php -v
+7) sudo apt-get install -y php7.4-cli php7.4-json php7.4-common php7.4-mysql php7.4-zip php7.4-gd php7.4-mbstring php7.4-curl php7.4-xml php7.4-bcmath
+8) php -m (loaded all the confiure related to apache"
+9) install composer latest verison can be found on official site
+10) sudo mv composer.phar /usr/local/bin/composer (move composer)
+
+-------AND HERE YOU GO PHP INSTALLED SUCESSFULLY
+
+## CONFIGURING DATABASE RDS ##
+1) GO to RDS and create database
+2) create security group select mysql/arora and keep your instance ip address ("ip a " for your ip)
+3) Add this security group to your database
+ Now come to your instance cms
+ a) Hit php -m (it will give your all php related extestion"
+ b) check if mysql is install or not 
+    if not run command "sudo apt install php-mysql"
+     if above cmd doesn't work for your run "sudo apt install mysql-client-core-8.0"
+c) Now try running php artisan migrate
+d) you will get error that databse not exist.lets create database
+   mysql -h test.cit9kpscfgsr.ap-south-1.rds.amazonaws.com -P 3306 -u test -p
+   it will ask for yourDB password enter it
+  ---You you get access to db--- 
+
+
+##LARAVEL 
+
+You can pull or clone repo in the folder that we configure in apache document root.
+Give permission to the folder for read & write
+   sudo chown -R ubunutu:ubuntu .
+   sudo chown -R 755 pathto.env file
+
+
+1) add .env file
+   sudo nano .env
+2) composer update
+3) if nedded give permission to .env
+   sudo chown -R ubunutu:ubuntu .
+   sudo chown -R 755 pathto.env file
+
+provide permission
+          sudo chown -R www-data storage
+          sudo chown -R www-data storage/framework
+          sudo chmod g+w -R storage
+          sudo chmod g+w -R storage/framework
+          sudo chmod g+w -R storage/framework/sessions/
+          sudo chmod g+w -R storage/logs/
+
+
+
+
+
+
+
+#install ssl 
+1) sudo certbot   
+2) sudo apt install python3-certbot-apache
+3) sudo certbot --expand yourdomain.com,www.yourdomain.com
+
+
+
+
+
+
+
+
+
+
+    
+
