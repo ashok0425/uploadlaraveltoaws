@@ -1,6 +1,6 @@
 Instruction to upload laravel project in aws
 
-CREATE INSTANCE
+###CREATE INSTANCE###
 1) Login to aws
 2) Create instance (with new security or select existing group)
 3) Create Elastic IP
@@ -29,20 +29,19 @@ Available applications:
   OpenSSH
 
 4)sudo ufw allow 'Apache'
-  sudo ufw enable(enable ufw)
-  sudo ufw allow  openSSH (enable/allow ssh)
+  sudo ufw enable(it will enable ufw)
+  sudo ufw allow  openSSH (it will enable/allow ssh)
 
 5)sudo ufw status
    (status will show active)
-    if not run "sudo systemctl enable apache2"
-6) Enable openSSH "sudo ufw allow ssh"
+    if not run cmd "sudo systemctl enable apache2"
 7) Create directory for your repo "mkdir app"
 8) Assign read and write permission to create directory
     sudo chown -R ubuntu:ubuntu .
     sudo chmod -R 755 /var/www/app
 9) Now you can create your or update ur project
 
-Configure virtual host
+##Configure virtual host##
 a) Go to site enable directory
    cd /etc/apache2/site-enabled/
 b) Remove all the conf file or disable it
@@ -53,14 +52,20 @@ c) No go to site-availabe dirctory
 d) Delete all file in site-available directory
 e) Create new file with name as you want
    sudo nano demo.conf
+
    paste the below code 
 <VirtualHost *:80>
     ServerAdmin webmaster@localhost
-    ServerName ashokmehta.xyz
-    ServerAlias www.ashokmehta.xyz
-    DocumentRoot /var/www/app
+    ServerName nsnhotels.com
+    ServerAlias www.nsnhotels.com
+    DocumentRoot /var/www/public
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
+    <Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+     </Directory>
 </VirtualHost>
 
 now press ctr+x then y and hit enter to exit editor
@@ -74,7 +79,7 @@ g) check apache status
 h) if needed restart apache
    sudo systemctl restart apache2
 
-----HERE You go you have successfully configure apache in ubuntu
+----HERE You go you have successfully configure apache in ubuntu----
 
 ######INSTALLING PHP AND COMPOSER ####
 1) sudo apt-get update
@@ -88,7 +93,7 @@ h) if needed restart apache
 9) install composer latest verison can be found on official site
 10) sudo mv composer.phar /usr/local/bin/composer (move composer)
 
--------AND HERE YOU GO PHP INSTALLED SUCESSFULLY
+-------AND HERE YOU GO PHP INSTALLED SUCESSFULLY-------
 
 ## CONFIGURING DATABASE RDS ##
 1) GO to RDS and create database
@@ -128,11 +133,6 @@ provide permission
           sudo chmod g+w -R storage/framework
           sudo chmod g+w -R storage/framework/sessions/
           sudo chmod g+w -R storage/logs/
-
-
-
-
-
 
 
 #install ssl 
