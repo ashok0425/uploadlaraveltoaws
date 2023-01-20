@@ -58,10 +58,10 @@ e) Create new file with name as you want
     ServerAdmin webmaster@localhost
     ServerName nsnhotels.com
     ServerAlias www.nsnhotels.com
-    DocumentRoot /var/www/public
+    DocumentRoot /var/www/nsnhotel/public/
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-    <Directory /var/www/>
+    <Directory /var/www/nsnhotel/public>
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
@@ -127,6 +127,7 @@ Give permission to the folder for read & write
    sudo chown -R 755 pathto.env file
 
 provide permission
+
           sudo chown -R www-data storage
           sudo chown -R www-data storage/framework
           sudo chmod g+w -R storage
@@ -139,6 +140,14 @@ provide permission
 1) sudo certbot   
 2) sudo apt install python3-certbot-apache
 3) sudo certbot --expand -d yourdomain.com,www.yourdomain.com
+
+Allowing HTTPS Through the Firewall
+
+sudo ufw status
+sudo ufw allow 'Apache Full'
+sudo ufw delete allow 'Apache'
+sudo ufw status
+
 
 
 
