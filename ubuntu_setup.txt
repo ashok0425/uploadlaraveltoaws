@@ -7,6 +7,11 @@ Instruction to upload laravel project in aws
 4) Associate Elastic IP to created instance
  while creating instace you will get one key file store it securly
 
+## create security group ##
+1) with http and https form public access
+2) with ssh for connecting instance with ssh key
+
+
 ###CREATING HOSTEDZONE###
 if you register domain via aws it will automatic create hostedzone for you
  For third party domain
