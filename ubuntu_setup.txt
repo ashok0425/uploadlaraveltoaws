@@ -155,6 +155,8 @@ sudo ufw status
 
 
 
+#rewrite url
+sudo a2enmod rewrite
 
 
 
