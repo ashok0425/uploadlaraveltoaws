@@ -1,1 +1,9 @@
 
+command to check file system
+sudo file -s /dev/filename
+
+command to resize file system
+sudo resize2fs /dev/filname
+
+command to grow partation
+sudo growpart /dev/filname
