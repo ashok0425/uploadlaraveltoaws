@@ -1,0 +1,92 @@
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com cpanel.yourdomain.com certificates.yourdomain.com;
+    root /var/www/yourdomain.com/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    if ($host = www.yourdomain.com) {
+        return 301 https://yourdomain.com$request_uri;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+
+            # Cache control headers for common SEO asset types
+        location ~* \.(js|css|png|jpg|jpeg|gif|webp|ico)$ {
+            expires 365d;
+            add_header Cache-Control "public, max-age=31536000";
+        }
+
+            location ~* \.(woff|woff2|ttf|otf|eot|svg)$ {
+            expires 365d;
+            add_header Cache-Control "public, max-age=31536000";
+        }
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+            fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+
+}
+
+server {
+    listen 80 default_server;
+    server_name yourdomain.in www.yourdomain.in;
+    root /var/www/yourdomain.in/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+
+        # Cache control headers for common SEO asset types
+        location ~* \.(js|css|png|jpg|jpeg|gif|webp|ico)$ {
+            expires 365d;
+            add_header Cache-Control "public, max-age=31536000";
+        }
+
+        location ~* \.(woff|woff2|ttf|otf|eot|svg)$ {
+                expires 365d;
+                add_header Cache-Control "public, max-age=31536000";
+        }
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
