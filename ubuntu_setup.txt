@@ -64,6 +64,7 @@ e) Create new file with name as you want
     ServerName nsnhotels.com
     ServerAlias www.nsnhotels.com
     DocumentRoot /var/www/nsnhotel/public/
+    DirectoryIndex index.php
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
     <Directory /var/www/nsnhotel/public>
