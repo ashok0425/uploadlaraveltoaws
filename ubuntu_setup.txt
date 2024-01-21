@@ -169,5 +169,22 @@ sudo service apache2 restart
 sudo update-alternatives --set php /usr/bin/php8.1
 
 
+
+FOr node app
+<VirtualHost *:80>
+    ServerName yourdomain.com
+    DocumentRoot /var/www/html
+
+    ProxyPass / http://localhost:your_nodejs_port/
+    ProxyPassReverse / http://localhost:your_nodejs_port/
+
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+
     
 
