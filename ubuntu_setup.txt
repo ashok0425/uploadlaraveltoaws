@@ -156,7 +156,7 @@ sudo ufw status
 
 
 
-#rewrite url
+#rewrite url in case showing 404
 sudo a2enmod rewrite
 
 
