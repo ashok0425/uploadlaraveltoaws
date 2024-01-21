@@ -185,6 +185,10 @@ FOr node app
     </Directory>
 </VirtualHost>
 
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo systemctl restart apache2
+
 
     
 
